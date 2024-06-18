@@ -1,5 +1,5 @@
 const allowOrigin =[
-    'https://shopkart.onrender.com'
+    'https://shopkart-xea2.onrender.com/'
 ]
 
 module.exports = allowOrigin
