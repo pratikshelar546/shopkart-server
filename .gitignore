@@ -1,3 +1,9 @@
-.vercel
-
 .env
+
+.vercel/
+
+dist
+
+node_modules
+dist
+upload
