@@ -15,6 +15,7 @@ import Admin from "./api/admin"
 import Owner from "./api/owner"
 import Review from "./api/review"
 import bodyParser from "body-parser";
+import allowOrigin from "./allowOrigin.js";
 // import fileUpload from "express-fileupload";
 dotenv.config();
 const flipcart = express();
@@ -27,7 +28,13 @@ flipcart.use(passport.initialize());
 flipcart.use(passport.session());
 flipcart.get("/", (req, res) => res.send("Namaste"));
 const corsOptions = {
-  origin: "*",
+  origin: (origin, callback) => {
+    if (allowOrigin.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -44,7 +51,7 @@ flipcart.use("/owner", Owner)
 flipcart.use("/cart", Cart);
 flipcart.use("/review", Review);
 flipcart.use("/order", Order);
-flipcart.use("/admin",Admin);
+flipcart.use("/admin", Admin);
 // cloudinary
 flipcart.use(bodyParser.json({ limit: '10mb' }));
 flipcart.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
